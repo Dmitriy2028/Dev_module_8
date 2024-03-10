@@ -24,8 +24,9 @@ public class PropertyReader {
                     .append(prop.getProperty("postgres.db.port"))
                     .append("/")
                     .append(prop.getProperty("postgres.db.database"))
-                    //.append("?currentSchema=public")
+                    .append("?currentSchema=public")
                     .toString();
+
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
@@ -93,6 +94,7 @@ public class PropertyReader {
                     .append(prop.getProperty("mysql.db.database"))
                     .append("?allowPublicKeyRetrieval=true&useSSL=false")
                     .toString();
+
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;

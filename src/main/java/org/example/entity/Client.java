@@ -1,4 +1,4 @@
-package org.example.dataClasses;
+package org.example.entity;
 
 public class Client {
     private long id;
@@ -27,9 +27,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "{id=" + id +
+                ", name='" + name + "\'}";
     }
 }

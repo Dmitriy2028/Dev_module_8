@@ -1,6 +1,7 @@
 package org.example.dbConfig;
 
 import org.example.propertyReader.PropertyReader;
+import org.flywaydb.core.Flyway;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,9 +19,12 @@ public class MysqlDatabase {
 
         try {
             String mysqlConnectionUrl = PropertyReader.getConnectionUrlForMysql();
+            String mysqlUser = PropertyReader.getUserForMysql();
+            String mysqlPassword = PropertyReader.getPasswordForMysql();
             this.mysqlConnection = DriverManager.getConnection(mysqlConnectionUrl,
-                    PropertyReader.getUserForMysql(),
-                    PropertyReader.getPasswordForMysql());
+                    mysqlUser,
+                    mysqlPassword);
+            flywayMigration(mysqlConnectionUrl, mysqlUser, mysqlPassword);
         } catch (SQLException e) {
             throw new RuntimeException("Create connection exception ==> " + e.getMessage());
         }
@@ -84,6 +88,11 @@ public class MysqlDatabase {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void flywayMigration (String url,String user,String password){
+        Flyway flyway = Flyway.configure().dataSource(url,user,password).load();
+        flyway.migrate();
     }
 }
 
